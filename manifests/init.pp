@@ -1,27 +1,35 @@
-class brewcask {
-  require homebrew
+# Public: Install and configure brewcask for use with Boxen.
+#
+# Examples
+#
+#   include brewcask
 
-  # caskroom is hardcoded to '/opt/homebrew-cask/Caskroom'
-  # https://github.com/caskroom/homebrew-cask/blob/master/lib/cask/locations.rb#L11
-  $cask_home = '/opt/homebrew-cask'
-  $cask_room = "${cask_home}/Caskroom"
+class brewcask(
+  $installdir = $brewcask::config::installdir,
+  $caskroom   = $brewcask::config::caskroom,
+) inherits brewcask::config {
 
-  homebrew::tap { 'caskroom/cask': }
+  include homebrew
 
-  file { $cask_home:
-    ensure => directory
+  file {
+    [$installdir, $caskroom]:
+      ensure  => 'directory',
+      owner   => $::boxen_user,
+      group   => 'staff',
+      mode    => '0755',
   }
 
-  # This prevents typing root password the first time a cask is installed
-  file { $cask_room:
-    ensure  => directory,
-    before  => Package['brew-cask'],
-    require => File[$cask_home]
+  homebrew::tap { 'caskroom/cask':
+    before => Package['brew-cask'],
   }
 
   package { 'brew-cask':
-    require  => Homebrew::Tap['caskroom/cask'],
-    provider => homebrew
+    provider => homebrew,
+  }
+
+  boxen::env_script { 'brewcask':
+    content  => template('brewcask/env.sh.erb'),
+    priority => highest,
   }
 
   Package['brew-cask'] -> Package <| provider == brewcask |>
