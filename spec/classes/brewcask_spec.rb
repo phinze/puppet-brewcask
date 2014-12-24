@@ -7,6 +7,7 @@ describe 'brewcask' do
     should include_class('homebrew')
 
     should contain_file('/test/boxen/homebrew-cask').with_ensure('directory')
+    should contain_file('/test/boxen/homebrew-cask/bin').with_ensure('directory')
     should contain_file('/test/boxen/homebrew-cask/Caskroom').with_ensure('directory')
 
     should contain_homebrew__tap('caskroom/cask').with_before('Package[brew-cask]')

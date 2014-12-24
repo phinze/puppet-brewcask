@@ -7,4 +7,6 @@
 class brewcask::config {
   $installdir = $::brewcask_root
   $caskroom   = "${installdir}/Caskroom"
+  $appdir     = '/Applications'
+  $binarydir  = "${installdir}/bin"
 }

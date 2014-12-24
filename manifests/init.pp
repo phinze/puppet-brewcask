@@ -7,12 +7,14 @@
 class brewcask(
   $installdir = $brewcask::config::installdir,
   $caskroom   = $brewcask::config::caskroom,
+  $appdir     = $brewcask::config::appdir,
+  $binarydir  = $brewcask::config::binarydir,
 ) inherits brewcask::config {
 
   include homebrew
 
   file {
-    [$installdir, $caskroom]:
+    [$installdir, "${installdir}/bin", $caskroom]:
       ensure  => 'directory',
       owner   => $::boxen_user,
       group   => 'staff',
@@ -24,6 +26,7 @@ class brewcask(
   }
 
   package { 'brew-cask':
+    ensure   => 'latest',
     provider => homebrew,
   }
 
