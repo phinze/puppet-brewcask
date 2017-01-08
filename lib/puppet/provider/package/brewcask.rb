@@ -23,6 +23,10 @@ Puppet::Type.type(:package).provide :brewcask,
     "#{Facter[:brewcask_root].value}/Caskroom"
   end
 
+  def self.cache
+    ENV["HOMEBREW_CACHE"] || "/Library/Caches/Homebrew"
+  end
+
   def self.current(name)
     caskdir = Pathname.new "#{caskroom}/#{name}"
     caskdir.directory? && caskdir.children.size >= 1 && caskdir.children.sort.last.to_s
@@ -85,6 +89,7 @@ Puppet::Type.type(:package).provide :brewcask,
       :custom_environment    => {
         "HOME"               => "/Users/#{default_user}",
         "PATH"               => "#{self.class.home}/bin:/usr/bin:/usr/sbin:/bin:/sbin",
+        "HOMEBREW_CACHE"     => self.class.cache,
         "HOMEBREW_CASK_OPTS" => "--caskroom=#{self.class.caskroom}",
         "HOMEBREW_NO_EMOJI"  => "Yes",
       },
