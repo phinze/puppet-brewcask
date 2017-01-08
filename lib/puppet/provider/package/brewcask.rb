@@ -85,7 +85,7 @@ Puppet::Type.type(:package).provide :brewcask,
       :custom_environment    => {
         "HOME"               => "/Users/#{default_user}",
         "PATH"               => "#{self.class.home}/bin:/usr/bin:/usr/sbin:/bin:/sbin",
-        "HOMEBREW_CASK_OPTS" => "--caskroom=#{self.class.caskroom}",
+        "HOMEBREW_CASK_OPTS" => "--caskroom=#{self.class.caskroom} --binarydir=/opt/boxen/bin",
         "HOMEBREW_NO_EMOJI"  => "Yes",
       },
       :failonfail            => true,
