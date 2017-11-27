@@ -1,8 +1,8 @@
-# Public: Install and configure homebrew cask for use with Boxen.
+# Public: installs homebrew cask
 #
 # Examples
 #
-#   include brewcask
+#    include brewcask
 class brewcask {
   include boxen::config
   require homebrew
