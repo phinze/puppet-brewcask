@@ -27,7 +27,7 @@ Puppet::Type.type(:package).provide :brewcask, :parent => Puppet::Provider::Pack
   end
 
   def self.current(name)
-    caskdir = Pathname.new '#{caskroom}/#{name}'
+    caskdir = Pathname.new "#{caskroom}/#{name}"
     caskdir.directory? && caskdir.children.size >= 1 && caskdir.children.sort.last.to_s
   end
 
@@ -36,7 +36,7 @@ Puppet::Type.type(:package).provide :brewcask, :parent => Puppet::Provider::Pack
   end
 
   def self.new_caskroom
-    @new_caskroom ||= Pathname.new('#{home}/Caskroom')
+    @new_caskroom ||= Pathname.new("#{home}/Caskroom")
   end
 
   def query
@@ -48,10 +48,10 @@ Puppet::Type.type(:package).provide :brewcask, :parent => Puppet::Provider::Pack
     install_cmd = ['brew']
     if install_options.any?
       install_cmd << 'cask install'
+      install_cmd << install_options
     else
       install_cmd << 'boxen-cask-install'
     end
-    install_cmd << install_options if install_options.any?
     install_cmd << resource[:name]
 
     execute install_cmd.flatten, command_opts
