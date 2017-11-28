@@ -23,7 +23,7 @@ describe provider do
     context 'installing cask without install options' do
       before do
         @resource = Puppet::Type.type(:package).new(
-                                                    :name     => 'cask',
+                                                    :name     => 'mycask',
                                                     :ensure   => :present,
                                                     :provider => :brewcask,
                                                    )
@@ -32,7 +32,7 @@ describe provider do
 
       it 'should return install command' do
         expect{ @provider.install }.to raise_error(Puppet::ExecutionFailure,
-                                                    /brew boxen-cask-install cask/)
+                                                    /brew boxen-cask-install mycask/)
       end
 
       it 'should return nil query' do
@@ -43,7 +43,7 @@ describe provider do
     context 'installing cask with install options' do
       before do
         @resource = Puppet::Type.type(:package).new(
-                                                    :name     => 'cask',
+                                                    :name     => 'mycask',
                                                     :ensure   => :present,
                                                     :provider => :brewcask,
                                                     :install_options => '--foo',
@@ -53,7 +53,7 @@ describe provider do
 
       it 'should return install command with install options' do
         expect { @provider.install }.to raise_error(Puppet::ExecutionFailure,
-                                                    /brew cask install --foo cask/)
+                                                    /brew cask install --foo mycask/)
       end
     end
   end
@@ -61,7 +61,7 @@ describe provider do
   describe 'when uninstalling' do
       before do
         @resource = Puppet::Type.type(:package).new(
-                                                    :name     => 'cask',
+                                                    :name     => 'mycask',
                                                     :ensure   => :present,
                                                     :provider => :brewcask,
                                                    )
@@ -70,7 +70,7 @@ describe provider do
 
       it 'should return uninstall command' do
         expect { @provider.uninstall }.to raise_error(Puppet::ExecutionFailure,
-                                                      /brew cask uninstall --force cask/)
+                                                      /brew cask uninstall --force mycask/)
       end
   end
 end
