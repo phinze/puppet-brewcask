@@ -47,7 +47,7 @@ describe provider do
                                                     :ensure   => :present,
                                                     :provider => :brewcask,
                                                     :install_options => '--foo',
-                                                   )
+                                                    )
         @provider = provider.new(@resource)
       end
 
@@ -64,7 +64,7 @@ describe provider do
                                                     :name     => 'mycask',
                                                     :ensure   => :present,
                                                     :provider => :brewcask,
-                                                   )
+                                                    )
         @provider = provider.new(@resource)
       end
 
