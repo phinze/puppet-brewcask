@@ -8,6 +8,13 @@ class brewcask {
   require homebrew
 
   file { "${boxen::config::envdir}/10_brewcask.sh":
-    ensure => 'absent'
+    ensure => 'absent',
   }
+
+  file { "${homebrew::config::brewsdir}/cmd/brew-boxen-cask-install.rb":
+    source => 'puppet:///modules/brewcask/brew-boxen-cask-install.rb',
+    mode   => '0755',
+  }
+
+  homebrew::tap { 'caskroom/cask': }
 }
