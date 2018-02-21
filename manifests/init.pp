@@ -15,4 +15,6 @@ class brewcask {
     source => 'puppet:///modules/brewcask/brew-boxen-cask-install.rb',
     mode   => '0755',
   }
+
+  homebrew::tap { 'caskroom/cask': }
 }
