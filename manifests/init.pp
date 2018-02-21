@@ -10,4 +10,6 @@ class brewcask {
   file { "${boxen::config::envdir}/10_brewcask.sh":
     ensure => 'absent'
   }
+
+  homebrew::tap { 'caskroom/cask': }
 }
